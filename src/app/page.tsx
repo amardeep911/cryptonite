@@ -1,5 +1,12 @@
-import Image from "next/image";
+import CoinLIst from "@/components/CoinLIst/CoinLIst";
 
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <div>Chart</div>
+      <div>
+        <CoinLIst />
+      </div>
+    </div>
+  );
 }
