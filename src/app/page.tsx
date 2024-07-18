@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div>
       <div>Chart</div>
-      <div>
+      <div className="m-10  ">
         <CoinLIst />
       </div>
     </div>

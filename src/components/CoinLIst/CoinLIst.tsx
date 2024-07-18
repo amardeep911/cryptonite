@@ -1,9 +1,12 @@
 "use client";
+// CoinList.tsx
+
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { addCoin } from "@/lib/store/features/coins/coinSlice";
 import { AppDispatch, RootState } from "@/lib/store/store";
 import { Coin } from "@/lib/store/features/coins/coinSlice";
+import Pagination from "../Elements/Pagination"; // Import Pagination component
 
 type Props = {};
 
@@ -14,6 +17,7 @@ const CoinList: React.FC<Props> = (props: Props) => {
   ) as Coin[];
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [pageNo, setPageNo] = useState(1);
 
   const Table_Head = [
     { label: "Name", className: "lg:w-1/4" },
@@ -39,14 +43,15 @@ const CoinList: React.FC<Props> = (props: Props) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/api/coins");
+        const response = await fetch(
+          `http://localhost:3000/api/coins?pageNo=${pageNo}`
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
         const result = await response.json();
-
-        result.coins.forEach((coin: Coin) => dispatch(addCoin(coin)));
+        console.log(result);
+        dispatch(addCoin(result.coins));
       } catch (error: any) {
         if (error instanceof Error) {
           setError(error);
@@ -57,9 +62,8 @@ const CoinList: React.FC<Props> = (props: Props) => {
         setLoading(false);
       }
     };
-
     fetchData();
-  }, [dispatch]); // Empty dependency array means this effect runs once after the initial render
+  }, [pageNo, dispatch]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -82,6 +86,7 @@ const CoinList: React.FC<Props> = (props: Props) => {
         <tbody className="text-gray-600 text-sm font-light">
           {Table_Body.map((row, rowIndex) => (
             <tr
+              draggable="true"
               key={rowIndex}
               className="border-b border-gray-200 hover:bg-gray-100"
             >
@@ -105,6 +110,9 @@ const CoinList: React.FC<Props> = (props: Props) => {
           ))}
         </tbody>
       </table>
+
+      {/* Use Pagination component */}
+      <Pagination pageNo={pageNo} setPageNo={setPageNo} />
     </div>
   );
 };

@@ -23,8 +23,12 @@ const coinSlice = createSlice({
   name: "coin",
   initialState,
   reducers: {
-    addCoin(state, action: PayloadAction<Coin>) {
-      state.coins = [...state.coins, action.payload];
+    addCoin(state, action: PayloadAction<Coin[]>) {
+      const updatedState: Coin[] = [];
+      action.payload.forEach((coin) => {
+        updatedState.push(coin);
+      });
+      state.coins = updatedState;
     },
   },
 });
