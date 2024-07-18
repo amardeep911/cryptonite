@@ -65,7 +65,54 @@ const CoinList: React.FC<Props> = (props: Props) => {
     fetchData();
   }, [pageNo, dispatch]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    // Skeleton loading UI
+    return (
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+            <tr>
+              {Table_Head.map((head, index) => (
+                <th
+                  key={index}
+                  className={`py-3 px-6 text-left ${head.className}`}
+                >
+                  {head.label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="text-gray-600 text-sm font-light">
+            {[...Array(5)].map((_, rowIndex) => (
+              <tr
+                key={rowIndex}
+                className="border-b border-gray-200 hover:bg-gray-100"
+              >
+                {Table_Head.map((_, cellIndex) => (
+                  <td
+                    key={cellIndex}
+                    className={`py-3 px-6 text-left ${Table_Head[cellIndex].className}`}
+                  >
+                    <div className="animate-pulse flex space-x-4">
+                      {cellIndex === 2 ? (
+                        <div className="rounded-full bg-gray-300 h-8 w-8"></div>
+                      ) : (
+                        <div className="rounded bg-gray-300 h-4 w-24"></div>
+                      )}
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Use Pagination component */}
+        <Pagination pageNo={pageNo} setPageNo={setPageNo} />
+      </div>
+    );
+  }
+
   if (error) return <div>Error: {error.message}</div>;
 
   return (
