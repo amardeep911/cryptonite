@@ -81,7 +81,7 @@ const CoinDetail = ({ params }: Props) => {
   const high52w = Math.max(...priceValues);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[40%,60%] gap-4 p-4">
+    <div className="grid grid-cols-1   md:grid-cols-[40%,60%] gap-4 p-4">
       <div>
         <CoinInfo coinData={coinData} />
       </div>

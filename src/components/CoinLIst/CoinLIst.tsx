@@ -86,7 +86,7 @@ const CoinList: React.FC<Props> = (props: Props) => {
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
-            {[...Array(5)].map((_, rowIndex) => (
+            {[...Array(10)].map((_, rowIndex) => (
               <tr
                 key={rowIndex}
                 className="border-b border-gray-200 hover:bg-gray-100"
