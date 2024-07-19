@@ -58,6 +58,8 @@ const GlobalCoinChart = (props: Props) => {
               borderWidth: 2,
               fill: false,
               tension: 0.1,
+              pointRadius: 0,
+              pointHoverRadius: 0,
             },
           ],
         };
