@@ -20,6 +20,7 @@ const CoinList: React.FC<Props> = (props: Props) => {
   const [pageNo, setPageNo] = useState(1);
 
   const Table_Head = [
+    { label: "ID", className: "lg:w-1/12" },
     { label: "Name", className: "lg:w-1/4" },
     { label: "Symbol", className: "lg:w-1/6 hidden lg:table-cell" },
     { label: "Image", className: "lg:w-1/12 hidden lg:table-cell" },
@@ -29,11 +30,13 @@ const CoinList: React.FC<Props> = (props: Props) => {
   ];
 
   const Table_Body = coins.map((coin: Coin) => {
+    console.log(coin);
     return [
+      coin.id, // Adding Coin ID here
       coin.name,
       coin.symbol,
       coin.image,
-      coin.current_price.toFixed(2),
+      "$ " + coin.current_price.toFixed(2),
       `$${coin.market_cap.toLocaleString()}`,
       coin.market_cap_rank.toString(),
     ];
@@ -50,7 +53,7 @@ const CoinList: React.FC<Props> = (props: Props) => {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
         dispatch(addCoin(result.coins));
       } catch (error: any) {
         if (error instanceof Error) {
@@ -94,7 +97,7 @@ const CoinList: React.FC<Props> = (props: Props) => {
                     className={`py-3 px-6 text-left ${Table_Head[cellIndex].className}`}
                   >
                     <div className="animate-pulse flex space-x-4">
-                      {cellIndex === 2 ? (
+                      {cellIndex === 3 ? (
                         <div className="rounded-full bg-gray-300 h-8 w-8"></div>
                       ) : (
                         <div className="rounded bg-gray-300 h-4 w-24"></div>
@@ -135,17 +138,18 @@ const CoinList: React.FC<Props> = (props: Props) => {
             <tr
               draggable="true"
               key={rowIndex}
-              className="border-b border-gray-200 hover:bg-gray-100"
+              onClick={() => (window.location.href = `/coinDetail/${row[0]}`)}
+              className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
             >
               {row.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}
                   className={`py-3 px-6 text-left ${Table_Head[cellIndex].className}`}
                 >
-                  {cellIndex === 2 ? (
+                  {cellIndex === 3 ? (
                     <img
                       src={cell}
-                      alt={row[0]}
+                      alt={row[1]}
                       className="w-8 h-8 rounded-full"
                     />
                   ) : (
