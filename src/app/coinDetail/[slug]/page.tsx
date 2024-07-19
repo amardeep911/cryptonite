@@ -1,5 +1,7 @@
 "use client";
+import Coingraph from "@/components/CoinGraph/Coingraph";
 import CoinInfo from "@/components/CoinInfo/CoinInfo";
+import CoinPeformanceBar from "@/components/CoinPerformanceBar/CoinPeformanceBar";
 import React, { useEffect, useState } from "react";
 
 type Props = {
@@ -15,6 +17,8 @@ const CoinDetail = ({ params }: Props) => {
 
   useEffect(() => {
     const fetchCoinData = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const response = await fetch(
           `https://api.coingecko.com/api/v3/coins/${params.slug}`
@@ -34,14 +38,31 @@ const CoinDetail = ({ params }: Props) => {
     fetchCoinData();
   }, [params.slug]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center text-red-500">Error: {error}</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="grid grid-cols-[60%,40%]">
-      <div>Coin graph</div>
+    <div className="grid grid-cols-1 md:grid-cols-[40%,60%] gap-4 p-4">
       <div>
         <CoinInfo coinData={coinData} />
+
+        <CoinPeformanceBar />
+      </div>
+      <div>
+        <Coingraph id={params.slug} />
       </div>
     </div>
   );
