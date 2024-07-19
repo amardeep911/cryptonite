@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import coinReducer from "./features/coins/coinSlice";
+import watchLIstCoinReducer from "./features/watchlist/watchListCoins";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       coin: coinReducer,
+      watchListCoin: watchLIstCoinReducer,
     },
   });
 };

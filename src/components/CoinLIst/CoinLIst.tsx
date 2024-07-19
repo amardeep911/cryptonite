@@ -1,6 +1,4 @@
 "use client";
-// CoinList.tsx
-
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { addCoin } from "@/lib/store/features/coins/coinSlice";
@@ -8,9 +6,11 @@ import { AppDispatch, RootState } from "@/lib/store/store";
 import { Coin } from "@/lib/store/features/coins/coinSlice";
 import Pagination from "../Elements/Pagination"; // Import Pagination component
 
-type Props = {};
+type Props = {
+  onCoinDrag: (coin: Coin) => void; // Add a prop to handle the drag event
+};
 
-const CoinList: React.FC<Props> = (props: Props) => {
+const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
   const dispatch = useAppDispatch<AppDispatch>();
   const coins = useAppSelector(
     (state: RootState) => state.coin.coins
@@ -30,7 +30,6 @@ const CoinList: React.FC<Props> = (props: Props) => {
   ];
 
   const Table_Body = coins.map((coin: Coin) => {
-    console.log(coin);
     return [
       coin.id, // Adding Coin ID here
       coin.name,
@@ -53,7 +52,6 @@ const CoinList: React.FC<Props> = (props: Props) => {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
-        // console.log(result);
         dispatch(addCoin(result.coins));
       } catch (error: any) {
         if (error instanceof Error) {
@@ -67,6 +65,14 @@ const CoinList: React.FC<Props> = (props: Props) => {
     };
     fetchData();
   }, [pageNo, dispatch]);
+
+  const handleDragStart = (
+    event: React.DragEvent<HTMLTableRowElement>,
+    coin: Coin
+  ) => {
+    event.dataTransfer.setData("coin", JSON.stringify(coin));
+    onCoinDrag(coin);
+  };
 
   if (loading) {
     // Skeleton loading UI
@@ -137,8 +143,8 @@ const CoinList: React.FC<Props> = (props: Props) => {
           {Table_Body.map((row, rowIndex) => (
             <tr
               draggable="true"
+              onDragStart={(event) => handleDragStart(event, coins[rowIndex])}
               key={rowIndex}
-              onClick={() => (window.location.href = `/coinDetail/${row[0]}`)}
               className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
             >
               {row.map((cell, cellIndex) => (
