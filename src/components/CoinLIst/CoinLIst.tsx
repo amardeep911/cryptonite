@@ -20,7 +20,7 @@ const CoinList: React.FC<Props> = (props: Props) => {
   const [pageNo, setPageNo] = useState(1);
 
   const Table_Head = [
-    { label: "ID", className: "lg:w-1/12" },
+    { label: "ID", className: "lg:w-1/12 hidden" },
     { label: "Name", className: "lg:w-1/4" },
     { label: "Symbol", className: "lg:w-1/6 hidden lg:table-cell" },
     { label: "Image", className: "lg:w-1/12 hidden lg:table-cell" },

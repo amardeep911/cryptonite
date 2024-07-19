@@ -5,7 +5,7 @@ type Props = {};
 const CoinInfo = ({ coinData }: any) => {
   console.log(coinData);
   return (
-    <div className="flex flex-col h-full justify-center items-center align-middle  border-gray-400 sm:p-5 sm:border-r sm:m-5 m-1">
+    <div className="flex flex-col h-fit justify-center items-center align-middle  border-gray-400 sm:p-5 sm:border-r sm:m-5 m-1">
       <div className="flex flex-col justify-center items-center">
         <img
           src={coinData.image.large}

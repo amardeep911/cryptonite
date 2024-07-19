@@ -76,7 +76,7 @@ const GlobalCoinChart = (props: Props) => {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-4 bg-white shadow-md rounded-lg">
+    <div className="max-w-screen-xl mx-auto p-4 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-4 text-center">
         Global Coin Market Cap
       </h2>

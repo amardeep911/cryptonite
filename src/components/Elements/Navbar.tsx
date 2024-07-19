@@ -46,7 +46,7 @@ const Navbar: React.FC<Props> = () => {
 
   return (
     <>
-      <nav className="bg-gray-800 p-4 sticky top-0 z-50">
+      <nav className="bg-gray-800  p-4 sticky top-0 z-50">
         <div className="container mx-auto flex flex-col sm:flex-row align-middle text-center items-center justify-between">
           <div className="text-white text-xl flex-row justify-center items-center align-middle font-bold">
             <a href="/">Cryptonite</a>
@@ -74,7 +74,7 @@ const Navbar: React.FC<Props> = () => {
         </div>
       </nav>
       {searchResults.length > 0 && (
-        <div className="bg-white shadow-md w-screen p-4  left-0 right-0 top-16 mx-auto z-40">
+        <div className="bg-white shadow-md w-screen p-4 absolute sticky  left-0 right-0 top-16 mx-auto z-40">
           <ul>
             {searchResults.map((coin: any) => (
               <li

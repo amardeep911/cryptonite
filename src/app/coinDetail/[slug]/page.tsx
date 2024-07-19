@@ -81,11 +81,14 @@ const CoinDetail = ({ params }: Props) => {
   const high52w = Math.max(...priceValues);
 
   return (
-    <div className="grid grid-cols-1   md:grid-cols-[40%,60%] gap-4 p-4">
+    <div
+      className="grid grid-cols-1    md:grid-cols-[40%,60%] gap-4 p-4"
+      style={{ height: "calc(100vh - 6rem)" }}
+    >
       <div>
         <CoinInfo coinData={coinData} />
       </div>
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col gap-2">
         <Coingraph id={params.slug} />
         <CoinPerformanceBar
           low24h={low24h}
