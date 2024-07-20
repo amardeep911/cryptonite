@@ -1,6 +1,7 @@
 "use client";
 import CoinList from "@/components/CoinLIst/CoinLIst";
 import GlobalCoinChart from "@/components/globalCoinChart/globalCoinChart";
+import RecentCoinList from "@/components/RecentCoinList/RecentCoinList";
 import Watchlist from "@/components/Watchlist/Watchlist";
 
 export default function Home() {
@@ -13,11 +14,13 @@ export default function Home() {
         <GlobalCoinChart />
         <CoinList onCoinDrag={handleCoinDrag} />
       </div>
-      <div className="p-5  sticky top-0 h-[calc(100vh-6rem)] ">
+      <div className="p-5 flex flex-col gap-5 sticky top-0 h-[calc(100vh-6rem)] ">
         <div>
           <Watchlist />
         </div>
-        <h1>Recent coin list</h1>
+        <div>
+          <RecentCoinList />
+        </div>
       </div>
     </div>
   );

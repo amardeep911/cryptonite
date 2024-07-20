@@ -34,7 +34,13 @@ const Coingraph = ({ id }: any) => {
       setError(null);
       try {
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${noOfDays}`
+          //   `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${noOfDays}`,
+          `http://localhost:3000/api/coins/historicData?id=${id}&days=${noOfDays}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.APIKEY}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

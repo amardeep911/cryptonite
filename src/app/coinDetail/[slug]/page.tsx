@@ -23,7 +23,12 @@ const CoinDetail = ({ params }: Props) => {
       try {
         // Fetch coin information
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${params.slug}`
+          `https://api.coingecko.com/api/v3/coins/${params.slug}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.APIKEY}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

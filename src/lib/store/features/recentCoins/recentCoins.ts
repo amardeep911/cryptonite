@@ -21,14 +21,17 @@ const initialState: RecentCoinListState = {
 };
 
 const watchListSlice = createSlice({
-  name: "watchListCoin",
+  name: "recentCoinList",
   initialState,
   reducers: {
-    addWatchListCoin(state, action: PayloadAction<RecentCoinList>) {
-      state.RecentListCoins.push(action.payload);
+    addRecenetListCoin(state, action: PayloadAction<RecentCoinList>) {
+      const recentCoin = action.payload;
+      if (!state.RecentListCoins.find((c) => c.id === recentCoin.id)) {
+        state.RecentListCoins.push(recentCoin);
+      }
     },
   },
 });
 
-export const { addWatchListCoin } = watchListSlice.actions;
+export const { addRecenetListCoin } = watchListSlice.actions;
 export default watchListSlice.reducer;

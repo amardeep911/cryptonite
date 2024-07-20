@@ -2,11 +2,13 @@ import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
-  const pageNo = searchParams.get("pageNo");
-  console.log(pageNo);
+  const id = searchParams.get("id");
+  const noOfDays = searchParams.get("days");
+  console.log(id);
+  console.log(noOfDays);
 
   const response = await fetch(
-    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageNo}&sparkline=false`,
+    `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${noOfDays}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.APIKEY}`,
@@ -15,5 +17,5 @@ export async function GET(req: NextRequest) {
   );
   const data = await response.json();
 
-  return Response.json({ coins: data });
+  return Response.json(data);
 }

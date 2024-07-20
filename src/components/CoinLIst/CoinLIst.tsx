@@ -1,17 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { addCoin } from "@/lib/store/features/coins/coinSlice";
 import { AppDispatch, RootState } from "@/lib/store/store";
 import { Coin } from "@/lib/store/features/coins/coinSlice";
 import Pagination from "../Elements/Pagination"; // Import Pagination component
+import { addRecenetListCoin } from "@/lib/store/features/recentCoins/recentCoins";
 
 type Props = {
   onCoinDrag: (coin: Coin) => void; // Add a prop to handle the drag event
 };
 
 const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
+  const router = useRouter();
   const dispatch = useAppDispatch<AppDispatch>();
   const coins = useAppSelector(
     (state: RootState) => state.coin.coins
@@ -73,6 +75,11 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
   ) => {
     event.dataTransfer.setData("coin", JSON.stringify(coin));
     onCoinDrag(coin);
+  };
+
+  const handleRowClick = (coin: any) => {
+    router.push(`/coinDetail/${coin.id}`);
+    dispatch(addRecenetListCoin(coin));
   };
 
   if (loading) {
@@ -145,7 +152,7 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
             <tr
               draggable="true"
               onDragStart={(event) => handleDragStart(event, coins[rowIndex])}
-              onClick={() => (window.location.href = `/coinDetail/${row[0]}`)}
+              onClick={() => handleRowClick(coins[rowIndex])}
               key={rowIndex}
               className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
             >
