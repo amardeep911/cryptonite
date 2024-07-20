@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { addCoin } from "@/lib/store/features/coins/coinSlice";
 import { AppDispatch, RootState } from "@/lib/store/store";
@@ -144,6 +145,7 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
             <tr
               draggable="true"
               onDragStart={(event) => handleDragStart(event, coins[rowIndex])}
+              onClick={() => (window.location.href = `/coinDetail/${row[0]}`)}
               key={rowIndex}
               className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
             >

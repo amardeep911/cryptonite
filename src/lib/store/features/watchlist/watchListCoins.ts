@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface WatchListCoin {
   id: string;
@@ -9,10 +8,9 @@ export interface WatchListCoin {
   current_price: number;
   market_cap: number;
   market_cap_rank: number;
-  price_change_percentage_24h: number;
 }
 
-export interface WatchListCoinsState {
+interface WatchListCoinsState {
   watchListCoins: WatchListCoin[];
 }
 
@@ -25,7 +23,10 @@ const watchListSlice = createSlice({
   initialState,
   reducers: {
     addWatchListCoin(state, action: PayloadAction<WatchListCoin>) {
-      state.watchListCoins.push(action.payload);
+      const coin = action.payload;
+      if (!state.watchListCoins.find((c) => c.id === coin.id)) {
+        state.watchListCoins.push(coin);
+      }
     },
   },
 });

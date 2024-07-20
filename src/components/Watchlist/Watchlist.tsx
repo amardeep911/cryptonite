@@ -2,11 +2,14 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { AppDispatch, RootState } from "@/lib/store/store";
+import { useRouter } from "next/navigation";
 import { addWatchListCoin } from "@/lib/store/features/watchlist/watchListCoins";
 
 type Props = {};
 
 const Watchlist = (props: Props) => {
+  const router = useRouter();
+
   const dispatch = useAppDispatch<AppDispatch>();
   const WatchlistArray = useAppSelector(
     (state: RootState) => state.watchListCoin.watchListCoins
@@ -58,7 +61,13 @@ const Watchlist = (props: Props) => {
 
             <tbody>
               {WatchlistArray.slice(0, 5).map((coin: any) => (
-                <tr key={coin.id} className="hover:bg-gray-100">
+                <tr
+                  key={coin.id}
+                  className="hover:bg-gray-100 cursor-pointer"
+                  onClick={() =>
+                    router.push(`/coinDetail/${coin.id}`, undefined)
+                  }
+                >
                   <td className="w-1/4 text-left py-3 px-4 text-xs">
                     <img
                       src={coin.image}
