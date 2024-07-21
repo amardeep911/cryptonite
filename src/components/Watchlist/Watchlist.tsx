@@ -81,8 +81,14 @@ const Watchlist = (props: Props) => {
                   <td className="w-1/6 text-left py-3 px-4 text-xs">
                     ${coin.current_price.toFixed(2)}
                   </td>
-                  <td className="w-1/6 text-left py-3 px-4 text-xs">
-                    {coin.price_change_percentage_24h.toFixed(2)}%
+                  <td
+                    className={`w-1/6 text-left py-3 px-4 text-xs ${
+                      coin.price_change_percentage_24h < 0
+                        ? "text-red-400"
+                        : "text-green-400"
+                    }`}
+                  >
+                    {coin.price_change_percentage_24h}%
                   </td>
                 </tr>
               ))}

@@ -62,7 +62,13 @@ const RecentCoinList = (props: Props) => {
                   <td className="w-1/6 text-left py-3 px-4 text-xs">
                     ${coin.current_price}
                   </td>
-                  <td className="w-1/6 text-left py-3 px-4 text-xs">
+                  <td
+                    className={`w-1/6 text-left py-3 px-4 text-xs ${
+                      coin.price_change_percentage_24h < 0
+                        ? "text-red-400"
+                        : "text-green-400"
+                    }`}
+                  >
                     {coin.price_change_percentage_24h}%
                   </td>
                 </tr>
