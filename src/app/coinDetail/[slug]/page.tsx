@@ -24,7 +24,7 @@ const CoinDetail = ({ params }: Props) => {
         // Fetch coin information
         const response = await fetch(
           // `https://api.coingecko.com/api/v3/coins/${params.slug}`,
-          `http://localhost:3000/api/coins/coinInfo?id=${params.slug}`,
+          `/api/coins/coinInfo?id=${params.slug}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.APIKEY}`,
@@ -41,7 +41,7 @@ const CoinDetail = ({ params }: Props) => {
         // Fetch historical data
         const historicalResponse = await fetch(
           // `https://api.coingecko.com/api/v3/coins/${params.slug}/market_chart?vs_currency=usd&days=365`
-          `http://localhost:3000/api/coins/historicData?id=${params.slug}&days=365`
+          `/api/coins/historicData?id=${params.slug}&days=365`
         );
         if (!historicalResponse.ok) {
           throw new Error("API limit exceeded please try again later ");
