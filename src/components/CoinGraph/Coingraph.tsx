@@ -58,11 +58,11 @@ const Coingraph: FC<Props> = ({ id }) => {
     } finally {
       setLoading(false);
     }
-  }, [id, noOfDays]);
+  }, [noOfDays]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [noOfDays]);
 
   const formatDataForChart = (): ChartData => {
     if (!historicData?.prices) {

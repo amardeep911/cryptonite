@@ -111,7 +111,7 @@ const Navbar: React.FC<Props> = () => {
         </div>
       )}
       {inputFocused && searchResults.length > 0 && (
-        <div className="bg-white shadow-md w-screen p-4 absolute left-0 right-0 top-16 mx-auto z-40">
+        <div className="bg-white shadow-md w-screen p-4   sticky left-0 right-0 top-16 mx-auto z-40">
           <ul>
             {searchResults.map((coin: Coin) => (
               <li

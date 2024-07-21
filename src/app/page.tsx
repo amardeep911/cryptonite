@@ -10,7 +10,7 @@ export default function Home() {
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-[70%,30%] h-[calc(100vh-6rem)] overflow-y-auto overflow-hidden">
-      <div className="m-10 space-y-10">
+      <div className="m-3 space-y-10">
         <GlobalCoinChart />
         <CoinList onCoinDrag={handleCoinDrag} />
       </div>

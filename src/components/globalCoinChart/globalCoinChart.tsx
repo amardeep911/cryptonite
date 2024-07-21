@@ -74,11 +74,11 @@ const GlobalCoinChart = (props: Props) => {
   }, []);
 
   return (
-    <div className="max-w-screen-xl mx-auto p-4 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-center">
+    <div className="max-w-screen-xl mx-auto sm:p-4 bg-white shadow-md rounded-lg">
+      <h2 className="text-2xl font-semibold mb-6 text-center">
         Global Coin Market Cap
       </h2>
-      <div className="flex items-center justify-center ">
+      <div className="flex items-center justify-center w-full ">
         {loading && (
           <div className=" mt-10 flex items-center justify-center h-64">
             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
