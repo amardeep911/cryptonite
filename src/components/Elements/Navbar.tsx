@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { RootState, AppDispatch } from "@/lib/store/store";
 import { addRecenetListCoin } from "@/lib/store/features/recentCoins/recentCoins";
 import { Coin } from "@/lib/store/features/coins/coinSlice";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type Props = {};
@@ -67,7 +68,7 @@ const Navbar: React.FC<Props> = () => {
       <nav className="bg-gray-800 p-4 sticky top-0 z-50">
         <div className="container mx-auto flex flex-col sm:flex-row align-middle text-center items-center justify-between">
           <div className="text-white text-xl flex-row justify-center items-center align-middle font-bold">
-            <a href="/">Cryptonite</a>
+            <Link href="/">Cryptonite</Link>
           </div>
           <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto mt-2 lg:mt-0">
             <form
