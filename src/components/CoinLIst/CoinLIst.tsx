@@ -29,7 +29,7 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
     { label: "Image", className: "lg:w-1/12 hidden lg:table-cell" },
     { label: "Current Price", className: "lg:w-1/6" },
     { label: "Market Cap", className: "lg:w-1/6 hidden lg:table-cell" },
-    { label: "Market Cap Rank", className: "lg:w-1/12 hidden lg:table-cell" },
+    { label: "24h Change", className: "lg:w-1/6" }, // New column for price change percentage
   ];
 
   const Table_Body = coins.map((coin: Coin) => {
@@ -40,7 +40,7 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
       coin.image,
       "$ " + coin.current_price.toFixed(2),
       `$${coin.market_cap.toLocaleString()}`,
-      coin.market_cap_rank.toString(),
+      coin.price_change_percentage_24h.toFixed(2), // Add price change percentage
     ];
   });
 
@@ -79,6 +79,8 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
     router.push(`/coinDetail/${coin.id}`);
     dispatch(addRecenetListCoin(coin));
   };
+
+  console.log(coins);
 
   if (loading) {
     // Skeleton loading UI
@@ -172,6 +174,14 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
                       alt={row[1]}
                       className="w-8 h-8 rounded-full"
                     />
+                  ) : cellIndex === 6 ? (
+                    <span
+                      className={
+                        parseFloat(cell) < 0 ? "text-red-400" : "text-green-400"
+                      }
+                    >
+                      {cell}%
+                    </span>
                   ) : (
                     cell
                   )}

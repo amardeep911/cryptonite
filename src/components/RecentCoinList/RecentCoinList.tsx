@@ -33,7 +33,7 @@ const RecentCoinList = (props: Props) => {
                   Name
                 </th>
                 <th className="w-1/12 text-left py-3 px-4 font-semibold text-xs">
-                  Last Price
+                  Price
                 </th>
                 <th className="w-1/6 text-left py-3 font-semibold text-xs">
                   24h Change
