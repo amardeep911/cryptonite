@@ -48,9 +48,7 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `http://localhost:3000/api/coins?pageNo=${pageNo}`
-        );
+        const response = await fetch(`/api/coins?pageNo=${pageNo}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

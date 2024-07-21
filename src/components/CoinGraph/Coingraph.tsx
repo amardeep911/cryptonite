@@ -35,7 +35,7 @@ const Coingraph: FC<Props> = ({ id }) => {
     setError(null);
     try {
       const response = await fetch(
-        `http://localhost:3000/api/coins/historicData?id=${id}&days=${noOfDays}`,
+        `/api/coins/historicData?id=${id}&days=${noOfDays}`,
         {
           headers: {
             Authorization: `Bearer ${process.env.APIKEY}`,

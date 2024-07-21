@@ -32,9 +32,7 @@ const GlobalCoinChart = (props: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/coins/charData"
-        );
+        const response = await fetch("/api/coins/charData");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
