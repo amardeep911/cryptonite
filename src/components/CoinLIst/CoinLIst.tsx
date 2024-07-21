@@ -130,7 +130,14 @@ const CoinList: React.FC<Props> = ({ onCoinDrag }) => {
     );
   }
 
-  if (error) return <div>Error: {error.message}</div>;
+  if (error)
+    return (
+      <div className="text-center h-40 justify-center mt-24  text-red-500">
+        {error.message.includes("rate limit")
+          ? "You've exceeded the API rate limit. Please wait a few minutes before trying again."
+          : `Error: ${error.message}`}
+      </div>
+    );
 
   return (
     <div className="overflow-x-auto">

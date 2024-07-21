@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC, useCallback } from "react";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 
@@ -20,46 +20,60 @@ type ChartData = {
   }[];
 };
 
-type Props = {};
+interface Props {
+  id: string;
+}
 
-const Coingraph = ({ id }: any) => {
+const Coingraph: FC<Props> = ({ id }) => {
   const [historicData, setHistoricData] = useState<HistoricData | null>(null);
-  const [noOfDays, setnoOfDays] = useState(1);
+  const [noOfDays, setNoOfDays] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(
-          //   `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${noOfDays}`,
-          `http://localhost:3000/api/coins/historicData?id=${id}&days=${noOfDays}`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.APIKEY}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/coins/historicData?id=${id}&days=${noOfDays}`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.APIKEY}`,
+          },
         }
-        const data: HistoricData = await response.json();
-        setHistoricData(data);
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+      );
 
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error(
+            "You've exceeded the API rate limit. Please wait a few minutes before trying again."
+          );
+        }
+        throw new Error("Network response was not ok");
+      }
+      const data: HistoricData = await response.json();
+      setHistoricData(data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [id, noOfDays]);
+
+  useEffect(() => {
     fetchData();
-  }, [noOfDays]);
+  }, []);
 
   const formatDataForChart = (): ChartData => {
-    if (!historicData) {
-      return { labels: [], datasets: [] };
+    if (!historicData?.prices) {
+      setError(
+        "You've exceeded the API rate limit. Please wait a few minutes before trying again."
+      );
+
+      return {
+        labels: [],
+        datasets: [],
+      };
     }
 
     const labels = historicData.prices.map((price) => {
@@ -89,6 +103,8 @@ const Coingraph = ({ id }: any) => {
     };
   };
 
+  console.log(historicData);
+
   return (
     <div className="p-4 bg-white rounded shadow-md">
       <div className="flex items-center justify-center ">
@@ -98,15 +114,19 @@ const Coingraph = ({ id }: any) => {
           </div>
         )}
         {error && (
-          <div className="text-center text-red-500">Error: {error}</div>
+          <div className="text-center h-40 justify-center mt-24 text-red-500">
+            {error.includes("rate limit")
+              ? "You've exceeded the API rate limit. Please wait a few minutes before trying again."
+              : `Error: ${error}`}
+          </div>
         )}
         {!loading && !error && historicData && (
-          <Line data={formatDataForChart()} />
+          <Line key={noOfDays} data={formatDataForChart()} />
         )}
       </div>
       <div className="flex justify-center space-x-2 mt-4">
         <button
-          onClick={() => setnoOfDays(1)}
+          onClick={() => setNoOfDays(1)}
           className={`px-4 py-2 rounded ${
             noOfDays === 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
           }`}
@@ -114,7 +134,7 @@ const Coingraph = ({ id }: any) => {
           1D
         </button>
         <button
-          onClick={() => setnoOfDays(7)}
+          onClick={() => setNoOfDays(7)}
           className={`px-4 py-2 rounded ${
             noOfDays === 7 ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
           }`}
@@ -122,7 +142,7 @@ const Coingraph = ({ id }: any) => {
           7D
         </button>
         <button
-          onClick={() => setnoOfDays(30)}
+          onClick={() => setNoOfDays(30)}
           className={`px-4 py-2 rounded ${
             noOfDays === 30
               ? "bg-blue-500 text-white"
@@ -132,7 +152,7 @@ const Coingraph = ({ id }: any) => {
           30D
         </button>
         <button
-          onClick={() => setnoOfDays(365)}
+          onClick={() => setNoOfDays(365)}
           className={`px-4 py-2 rounded ${
             noOfDays === 365
               ? "bg-blue-500 text-white"

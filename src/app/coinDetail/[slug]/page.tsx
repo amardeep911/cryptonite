@@ -23,7 +23,8 @@ const CoinDetail = ({ params }: Props) => {
       try {
         // Fetch coin information
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${params.slug}`,
+          // `https://api.coingecko.com/api/v3/coins/${params.slug}`,
+          `http://localhost:3000/api/coins/coinInfo?id=${params.slug}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.APIKEY}`,
@@ -31,17 +32,19 @@ const CoinDetail = ({ params }: Props) => {
           }
         );
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          setError("API limit exceeded please try again later");
+          throw new Error("API limit exceeded please try again later");
         }
         const data = await response.json();
         setCoinData(data);
 
         // Fetch historical data
         const historicalResponse = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${params.slug}/market_chart?vs_currency=usd&days=365`
+          // `https://api.coingecko.com/api/v3/coins/${params.slug}/market_chart?vs_currency=usd&days=365`
+          `http://localhost:3000/api/coins/historicData?id=${params.slug}&days=365`
         );
         if (!historicalResponse.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("API limit exceeded please try again later ");
         }
         const historicalData = await historicalResponse.json();
         setHistoricalData(historicalData);
@@ -84,14 +87,16 @@ const CoinDetail = ({ params }: Props) => {
   const priceValues = prices.map((price: number[]) => price[1]);
   const low52w = Math.min(...priceValues);
   const high52w = Math.max(...priceValues);
-
+  console.log("from here" + error);
   return (
     <div
       className="grid grid-cols-1    md:grid-cols-[40%,60%] gap-4 p-4"
       style={{ height: "calc(100vh - 6rem)" }}
     >
       <div>
-        <CoinInfo coinData={coinData} />
+        <CoinInfo coinData={coinData} error={error} />
+
+        {/* <CoinInfo coinData={coinData} error={error} /> */}
       </div>
       <div className="flex flex-col gap-2">
         <Coingraph id={params.slug} />
