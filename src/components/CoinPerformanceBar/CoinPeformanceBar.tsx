@@ -21,11 +21,13 @@ const CoinPerformanceBar: React.FC<Props> = ({
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border">
-          <span className="font-semibold text-gray-700">Today's Low:</span>
+          <span className="font-semibold text-gray-700">Today&apos;s Low:</span>
           <span className="text-gray-900">${low24h.toFixed(2)}</span>
         </div>
         <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border">
-          <span className="font-semibold text-gray-700">Today's High:</span>
+          <span className="font-semibold text-gray-700">
+            Today&apos;s High:
+          </span>
           <span className="text-gray-900">${high24h.toFixed(2)}</span>
         </div>
         <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border">
